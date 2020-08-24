@@ -7,7 +7,7 @@ import com.umeng.myapplication.bean.DataX
 
 @Dao
 interface DataDao{
-    @Query("SELECT * FROM DataX")
+    @Query("SELECT * FROM datax")
     suspend fun getAllData() : MutableList<DataX>
 
     @Insert

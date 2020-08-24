@@ -1,6 +1,7 @@
 package com.umeng.myapplication.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,7 @@ class MainFragment : Fragment(){
     companion object {
         fun newInstance() = MainFragment()
     }
+    protected var rootView :View ?= null
 
     private val viewModel: MainViewModel by viewModels()
     @Inject lateinit var list : MutableList<DataX>
@@ -32,25 +34,35 @@ class MainFragment : Fragment(){
 
     private var refreshLayout : SmartRefreshLayout ?= null
 
+    private inline fun <reified T : View> findViewById(id :Int) : T? {
+        return rootView?.findViewById(id)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+                              savedInstanceState: Bundle?): View? {
+        rootView = inflater.inflate(R.layout.main_fragment, container, false)
 
         lifecycle.addObserver(viewModel)
 
-        observe(viewModel.listLiveData,this::onData)
 
-        val view = inflater.inflate(R.layout.main_fragment, container, false)
-        val rv = view.findViewById<RecyclerView>(R.id.mainRv)
-        rv.adapter = adapter
+        val rv = findViewById<RecyclerView>(R.id.mainRv)
 
-        refreshLayout = view.findViewById<SmartRefreshLayout>(R.id.refreshlayout)
+
+        Log.d("MainFragment","rv = $rv")
+        rv?.adapter = adapter
+
+        refreshLayout = findViewById(R.id.refreshlayout)
+        Log.d("MainFragment","refreshLayout = $refreshLayout")
         refreshLayout?.setOnRefreshListener {
             viewModel.loadData(true)
         }
 
+        observe(viewModel.listLiveData,this::onData)
+
         observe(viewModel.stateLiveData,this::onChangeState)
-        return view
+        return rootView
     }
+
 
     fun onData(data : MutableList<DataX>){
         list.clear()
