@@ -1,4 +1,4 @@
-package com.umeng.myapplication
+package com.umeng.myapplication.view
 
 import android.annotation.SuppressLint
 import android.content.Context

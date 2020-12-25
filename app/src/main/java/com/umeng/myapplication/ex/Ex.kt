@@ -1,4 +1,4 @@
-package com.umeng.myapplication
+package com.umeng.myapplication.ex
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

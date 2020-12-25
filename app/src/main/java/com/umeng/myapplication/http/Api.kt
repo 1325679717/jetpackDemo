@@ -1,4 +1,4 @@
-package com.umeng.myapplication.ui.main
+package com.umeng.myapplication.http
 
 import com.umeng.myapplication.bean.ArticleInfo
 import retrofit2.Response

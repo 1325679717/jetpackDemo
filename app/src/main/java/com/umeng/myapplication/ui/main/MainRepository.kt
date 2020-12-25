@@ -1,11 +1,11 @@
 package com.umeng.myapplication.ui.main
 
-import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import com.umeng.myapplication.bean.DataX
 import com.umeng.myapplication.db.DataDao
+import com.umeng.myapplication.http.Api
 import retrofit2.Retrofit
 import javax.inject.Inject
 

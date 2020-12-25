@@ -2,8 +2,8 @@ package com.umeng.myapplication.module
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.umeng.myapplication.http.HttpLogger
-import com.umeng.myapplication.http.RequestInterceptor
+import com.umeng.myapplication.http.interceptor.HttpLogger
+import com.umeng.myapplication.http.interceptor.RequestInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

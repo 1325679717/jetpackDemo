@@ -1,8 +1,8 @@
-package com.umeng.myapplication
+package com.umeng.myapplication.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.umeng.myapplication.ui.main.MainFragment
+import com.umeng.myapplication.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
