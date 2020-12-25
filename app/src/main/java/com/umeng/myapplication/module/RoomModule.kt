@@ -21,7 +21,7 @@ object RoomModule {
         Log.d("RoomModule","app = $app")
         return Room.databaseBuilder(
                 app,
-                AppDatabase::class.java, "room_db"
+                AppDatabase::class.java, "room_jetpack_db"
             ).build()
 
     }

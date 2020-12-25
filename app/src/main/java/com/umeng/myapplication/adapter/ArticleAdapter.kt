@@ -37,7 +37,7 @@ class ArticleAdapter : PagingDataAdapter<DataX,ArticleAdapter.MyViewHolder>(diff
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.main_item, null)
+            LayoutInflater.from(parent.context).inflate(R.layout.main_item, parent,false)
         )
     }
 

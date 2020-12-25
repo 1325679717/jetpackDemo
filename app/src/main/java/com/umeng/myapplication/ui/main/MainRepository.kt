@@ -13,10 +13,10 @@ class MainRepository @Inject constructor(
     private val dataDao: DataDao,
     private val retrofit: Retrofit){
     fun getArticleData() = Pager(PagingConfig(pageSize = 21)){
-        ArticleDataSource(retrofit)
+        ArticleDataSource(dataDao,retrofit)
     }.flow
 
-    class ArticleDataSource(val retrofit: Retrofit) : PagingSource<Int, DataX>() {
+    class ArticleDataSource(private val dataDao: DataDao,val retrofit: Retrofit) : PagingSource<Int, DataX>() {
         override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DataX> {
             val page = params.key ?:0
             var data : MutableList<DataX> ?= null
@@ -27,7 +27,6 @@ class MainRepository @Inject constructor(
                         data = response.body()?.data?.datas
                     }
                 }
-//                Log.d("ArticleDataSource","loadData = ${data}")
                 return LoadResult.Page(
                     data = data!!,
                     prevKey = null,

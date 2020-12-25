@@ -45,19 +45,17 @@ class MainFragment : Fragment(){
 
         lifecycle.addObserver(viewModel)
 
-
         val rv = findViewById<RecyclerView>(R.id.mainRv)
 
         rv?.adapter = adapter.withLoadStateFooter(PostsLoadStateAdapter(adapter))
 
         refreshLayout = findViewById(R.id.refreshlayout)
+
         refreshLayout?.setOnRefreshListener {
             adapter.refresh()
         }
 
         viewModel.getArticleList().observe(viewLifecycleOwner, Observer {
-            Log.d(TAG,"launchWhenCreated = ${it}")
-
             adapter.submitData(lifecycle,it)
         })
         adapter.addLoadStateListener {
