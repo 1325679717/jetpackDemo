@@ -7,22 +7,23 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.android.scopes.FragmentScoped
 
 
 @Module//ActivityRetainedComponent
-@InstallIn(ActivityComponent::class)
+@InstallIn(FragmentComponent::class)
 object ArticleMudule{
-    @ActivityScoped
+    @FragmentScoped
     @Provides
-    fun provideArticleAdapter(list : MutableList<DataX>) : ArticleAdapter {
-        val articleAdapter = ArticleAdapter(list)
-    Log.d("ArticleMudule"," ${articleAdapter}")
+    fun provideArticleAdapter() : ArticleAdapter {
+        val articleAdapter = ArticleAdapter()
         return articleAdapter
     }
-    @ActivityScoped
-    @Provides
-    fun provideList() : MutableList<DataX>{
-        return arrayListOf()
-    }
+//    @FragmentScoped
+//    @Provides
+//    fun provideList() : MutableList<DataX>{
+//        return arrayListOf()
+//    }
 }

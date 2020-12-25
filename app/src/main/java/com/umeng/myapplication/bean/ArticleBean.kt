@@ -22,7 +22,8 @@ data class Data(
 @Entity(tableName = "datax")
 data class DataX(
     @PrimaryKey val id : Int,
-    @ColumnInfo(name = "chapter_name")val chapterName: String
+    val chapterName: String,
+    val title :String
 )
 
 data class Tag(

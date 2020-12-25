@@ -9,15 +9,15 @@ import com.umeng.myapplication.adapter.ArticleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-@AndroidEntryPoint
+//@AndroidEntryPoint
 @SuppressLint("AppCompatCustomView")
 class AppView(context: Context, attributeSet: AttributeSet) : TextView(context,attributeSet) {
 
-    @Inject
-    lateinit var adapter : ArticleAdapter
+//    @Inject
+//    lateinit var adapter : ArticleAdapter
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        text = adapter.toString()
-        Log.d("AppView","adapter = $adapter")
+//        text = adapter.toString()
+//        Log.d("AppView","adapter = $adapter")
     }
 }

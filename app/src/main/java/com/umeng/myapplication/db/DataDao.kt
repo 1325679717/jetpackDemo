@@ -3,6 +3,7 @@ package com.umeng.myapplication.db
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.umeng.myapplication.bean.DataX
 
 @Dao
@@ -16,4 +17,7 @@ interface DataDao{
 
     @Query("DELETE FROM datax")
     suspend fun deleteAll()
+
+    @Update
+    suspend fun updateAll(data : MutableList<DataX>)
 }

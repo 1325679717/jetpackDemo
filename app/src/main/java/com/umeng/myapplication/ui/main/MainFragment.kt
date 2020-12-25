@@ -7,13 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.paging.LoadState
+import androidx.paging.map
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.umeng.myapplication.R
 import com.umeng.myapplication.adapter.ArticleAdapter
+import com.umeng.myapplication.adapter.PostsLoadStateAdapter
 import com.umeng.myapplication.bean.DataX
 import com.umeng.myapplication.bean.State
 import com.umeng.myapplication.observe
@@ -23,16 +24,16 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainFragment : Fragment(){
 
+    private val TAG = "MainFragment"
     companion object {
         fun newInstance() = MainFragment()
     }
     protected var rootView :View ?= null
 
     private val viewModel: MainViewModel by viewModels()
-    @Inject lateinit var list : MutableList<DataX>
     @Inject lateinit var adapter : ArticleAdapter
 
-    private var refreshLayout : SmartRefreshLayout ?= null
+    private var refreshLayout : SmartRefreshLayout?= null
 
     private inline fun <reified T : View> findViewById(id :Int) : T? {
         return rootView?.findViewById(id)
@@ -47,27 +48,29 @@ class MainFragment : Fragment(){
 
         val rv = findViewById<RecyclerView>(R.id.mainRv)
 
-
-        Log.d("MainFragment","rv = $rv")
-        rv?.adapter = adapter
+        rv?.adapter = adapter.withLoadStateFooter(PostsLoadStateAdapter(adapter))
 
         refreshLayout = findViewById(R.id.refreshlayout)
-        Log.d("MainFragment","refreshLayout = $refreshLayout")
         refreshLayout?.setOnRefreshListener {
-            viewModel.loadData(true)
+            adapter.refresh()
         }
 
-        observe(viewModel.listLiveData,this::onData)
+        viewModel.getArticleList().observe(viewLifecycleOwner, Observer {
+            Log.d(TAG,"launchWhenCreated = ${it}")
 
-        observe(viewModel.stateLiveData,this::onChangeState)
+            adapter.submitData(lifecycle,it)
+        })
+        adapter.addLoadStateListener {
+            if (it.refresh is LoadState.NotLoading && refreshLayout?.isRefreshing!!){
+                refreshLayout?.finishRefresh()
+            }
+        }
         return rootView
     }
 
 
     fun onData(data : MutableList<DataX>){
-        list.clear()
-        list.addAll(data)
-        adapter?.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
     }
 
     fun onChangeState(state : State){
